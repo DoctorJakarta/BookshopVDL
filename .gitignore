@@ -1,0 +1,6 @@
+/*
+/*/
+!.gitignore
+### Only track listed  directories ###
+!/config/
+!/src/
