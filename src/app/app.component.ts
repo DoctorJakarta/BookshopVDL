@@ -1,99 +1,97 @@
-import { Component, ElementRef, NgZone, OnInit, Renderer, ViewChild, ViewEncapsulation, EventEmitter, Output, Inject } from '@angular/core';
-import { DomSanitizer, DOCUMENT } from '@angular/platform-browser';
-import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
-import { Category, VdlIconRegistry, VdlOption } from 'vdl-angular';
+import {
+  Component,
+  ElementRef,
+  NgZone,
+  OnInit,
+  Renderer,
+  ViewChild
+} from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router, NavigationEnd } from '@angular/router';
+import {
+  VdlAutocompleteTrigger,
+  VdlIconRegistry,
+  VdlOption,
+  GlobalNotification,
+  GlobalHelp,
+  Category
+} from 'vdl-angular';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  encapsulation: ViewEncapsulation.None,
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
-
-export class AppComponent {
-
-  @ViewChild('input') public inputElement: ElementRef;
-
-  title = 'BookshopUI';
-    public categoryList: Category[] = [
-    { displayName: 'Home', route: 'home', icon: 'fa-home' },
-    { displayName: 'Inventory', route: 'inventory', icon: 'fa-clipboard' },
-    {
-      displayName: 'Giant',
-      icon: 'fa-check-square',
-      subCategories: [
-        { displayName: 'Fee', icon: 'fa-car' },
-        { displayName: 'Fi', icon: 'fa-calendar' },
-        { displayName: 'Foe', icon: 'fa-birthday-cake' }
-      ]
-    }
-  ];
-
+export class AppComponent implements OnInit {
+  title = 'vdl-angular-cli-starter';
   public selectedCategory: Category | null;
 
-  constructor(vdlIconRegistry: VdlIconRegistry,
-              private _sanitizer: DomSanitizer,
-              private _renderer: Renderer,
-              private _route: ActivatedRoute,
-              private _router: Router,
-              private _ngZone: NgZone,
-              @Inject(DOCUMENT) private document: any) {
+  public inputTypeahead: string;
+  public inputValue: any;
+
+  public categories: Category[] = [
+    { displayName: 'Home', route: 'home', icon: 'fa-home' },
+    { displayName: 'Inventory', route: 'inventory', icon: 'fa-columns' }
+  ];
+
+  constructor(
+    vdlIconRegistry: VdlIconRegistry,
+    private _sanitizer: DomSanitizer,
+    private _renderer: Renderer,
+    private _router: Router,
+    private _ngZone: NgZone,
+    private _elementRef: ElementRef
+  ) {
     vdlIconRegistry.registerFontClassAlias('fontawesome', 'fa');
+    vdlIconRegistry.addSvgIcon(
+      'ux-veritas',
+      _sanitizer.bypassSecurityTrustResourceUrl('/assets/ux-veritas.svg')
+    );
   }
-
-  public categorySelected(category: Category) {
-    console.log('Selected Category: ' + category.route);
-    this.selectedCategory = category;
-  }
-
-  onActivate(event) {
-   console.log('Got onActivate event path: ' + event.path);
-  }
-
-
-
 
 
   public onCategorySelect(category: Category) {
-    console.log('Selected onCategorySelect: ' + category.route);
     this._router.navigate([category.route]);
+    const routedContent = this._elementRef.nativeElement.querySelector(
+      '.routed-content'
+    );
+
+    if (routedContent) {
+      routedContent.scrollTop = 0;
+    }
   }
 
-  public alert(value: string) {
-    alert(value);
-  }
-
-
-
-  private findCategoryByRoute(categories: Category[], route: string): Category | null {
-    const trimmedRoute: string = route.startsWith('/') ? route.substr(1) : route; //  trimStart(route, '/');
+  private findCategoryByRoute(
+    categories: Category[],
+    route: string
+  ): Category | null {
+    let trimmedRoute: string = route.startsWith('/') ? route.substr(1) : route;
+    let trimmedCvRoute: string = '';
 
     function reducer(pv: Category, cv: Category): Category {
       if (cv.subCategories && cv.subCategories.length > 0) {
         return cv.subCategories.reduce(reducer, pv);
       }
-      return cv.route === trimmedRoute ? cv : pv;
+
+      trimmedCvRoute = cv.route.startsWith('/') ? cv.route.substr(1) : cv.route;
+
+      return trimmedCvRoute === trimmedRoute ? cv : pv;
     }
 
     return categories.reduce(reducer);
-
   }
-
-  // tslint:disable-next-line:use-life-cycle-interface
-  public ngOnInit() {
-    this.selectedCategory = this.categoryList[0];
-    console.log('App-Admin has initialized with route: ' + this._route.snapshot.url[0]);
-
-
-    this._router.events.subscribe(
-      (event) => {
-        if (event instanceof NavigationEnd) {
-            console.log('Got router.events: ' + event.urlAfterRedirects);
-               this.selectedCategory = this.findCategoryByRoute(this.categoryList, event.urlAfterRedirects);
-         }
+    public ngOnInit() {
+    this.selectedCategory = this.categories[0];
+    this._router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.selectedCategory = this.findCategoryByRoute(
+          this.categories,
+          event.urlAfterRedirects
+        );
       }
-    );
+    });
+					 
+														   
   }
-
-
 }

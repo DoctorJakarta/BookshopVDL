@@ -1,12 +1,13 @@
-<div class="app-body">
-    <div class="app-sidenav">
-        <vdl-sidenav [selectedCategory]="selectedCategory"
-             [categoryList]="categoryList"
-             (onCategorySelect)="categorySelected($event)">
-       </vdl-sidenav>
-    </div>
-    <div class="app-content">
-        <router-outlet (activate)="onActivate($event)"></router-outlet>
-    </div>
-</div>
+<top-bar></top-bar>
 
+<div class="app-body">
+    <vdl-sidenav [scrollable]="true"
+                 [selectedCategory]="selectedCategory"
+                 [categoryList]="categories"
+                 (categorySelected)="onCategorySelect($event)">
+    </vdl-sidenav>
+
+  <div class="app-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

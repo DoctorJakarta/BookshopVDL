@@ -1,120 +1,37 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ROUTES } from './app.routes';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
+import { VdlModule } from './vdl-module';
+import { ROUTES } from './app.routes';
 import { RouterModule, PreloadAllModules } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import './styles/global.scss';
 
-import {
-  VdlExpansionModule,
-  VdlAutocompleteModule,
-  VdlBreadcrumbsModule,
-  VdlButtonModule,
-  VdlButtonToggleModule,
-  VdlCardModule,
-  VdlCheckboxModule,
-  VdlChipsModule,
-  VdlDataTableModule,
-  VdlDatepickerModule,
-  VdlDetailsPanelModule,
-  VdlDialogModule,
-  VdlFormFieldModule,
-  VdlGlobalHelpModule,
-  VdlGlobalNotificationModule,
-  VdlGridListModule,
-  VdlIconModule,
-  VdlInputModule,
-  VdlListModule,
-  VdlLoginModule,
-  VdlMenuModule,
-  VdlMomentDateModule,
-  VdlNativeDateModule,
-  VdlNotificationModule,
-  VdlPanelModule,
-  VdlPopoverModule,
-  VdlProgressBarModule,
-  VdlProgressSpinnerModule,
-  VdlRadioModule,
-  VdlScrollableContainerModule,
-  VdlSelectModule,
-  VdlSidenavModule,
-  VdlSliderModule,
-  VdlSlideToggleModule,
-  VdlStepperModule,
-  VdlTabsModule,
-  VdlTitleBarModule,
-  VdlToolbarModule,
-  VdlTooltipModule,
-  VdlTopBarModule,
-  VdlWizardModule
-} from 'vdl-angular';
 import { InventoryComponent } from './components/inventory/inventory.component';
-
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules} ),
-
-  VdlExpansionModule,
-  VdlAutocompleteModule,
-  VdlBreadcrumbsModule,
-  VdlButtonModule,
-  VdlButtonToggleModule,
-  VdlCardModule,
-  VdlCheckboxModule,
-  VdlChipsModule,
-  VdlDataTableModule,
-  VdlDatepickerModule,
-  VdlDetailsPanelModule,
-  VdlDialogModule,
-  VdlFormFieldModule,
-  VdlGlobalHelpModule,
-  VdlGlobalNotificationModule,
-  VdlGridListModule,
-  VdlIconModule,
-  VdlInputModule,
-  VdlListModule,
-  VdlLoginModule,
-  VdlMenuModule,
-  VdlMomentDateModule,
-  VdlNativeDateModule,
-  VdlNotificationModule,
-  VdlPanelModule,
-  VdlPopoverModule,
-  VdlProgressBarModule,
-  VdlProgressSpinnerModule,
-  VdlRadioModule,
-  VdlScrollableContainerModule,
-  VdlSelectModule,
-  VdlSidenavModule,
-  VdlSliderModule,
-  VdlSlideToggleModule,
-  VdlStepperModule,
-  VdlTabsModule,
-  VdlTitleBarModule,
-  VdlToolbarModule,
-  VdlTooltipModule,
-  VdlTopBarModule,
-  VdlWizardModule
-  ],
-    declarations: [
+  declarations: [
     AppComponent,
     HomeComponent,
     InventoryComponent
   ],
+  imports: [
+    HttpClientModule,
+    BrowserModule,
+    FormsModule,
+    VdlModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot(ROUTES, {
+      useHash: true
+    })
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

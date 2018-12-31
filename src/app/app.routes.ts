@@ -4,10 +4,7 @@ import { InventoryComponent } from './components/inventory/inventory.component';
 
 
 export const ROUTES: Routes = [
-  { path: '',      component: HomeComponent },
-  { path: 'home',  component: HomeComponent },
-  { path: 'inventory',  component: InventoryComponent },
-
-
-  { path: '**',    component: HomeComponent }
+  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'inventory', component: InventoryComponent }
 ];

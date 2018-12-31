@@ -1,6 +1,5 @@
-/*
-/*/
-!.gitignore
-### Only track listed  directories ###
-!/config/
-!/src/
+/dist
+/tmp
+/build
+/node_modules
+.vscode

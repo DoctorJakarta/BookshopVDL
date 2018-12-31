@@ -1,0 +1,34 @@
+@import './styles/_variables.scss';
+
+.app-body {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+}
+.app-content {
+  flex: 1 1 auto;
+  background-color: #f3f3f3;
+  position: relative;
+  overflow: scroll;
+}
+.vdl-top-bar {
+  flex: 0 0 auto;
+
+  .search-container {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+
+    .vdl-top-bar-divider {
+      margin-right: 14px;
+    }
+
+    .vdl-form-field {
+      text-align: right;
+
+      .vdl-input-element {
+        padding-left: 16px;
+      }
+    }
+  }
+}
