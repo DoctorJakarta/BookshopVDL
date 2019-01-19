@@ -1,0 +1,16 @@
+.smallForm{
+    padding: 20px;
+}
+.smallField{
+    width: 400px;
+    padding: -30px 0px;
+    display: block;
+}
+
+td input{
+     width: 70px;
+     display: inline;
+     text-align: right;
+     padding: 0px 5px;
+     font-size: x-large;
+}

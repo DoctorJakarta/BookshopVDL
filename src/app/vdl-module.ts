@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import {
   VdlAutocompleteModule,
   VdlAvatarModule,
@@ -47,7 +47,7 @@ import {
   VdlTooltipModule,
   VdlTopBarModule,
   VdlWizardModule
-} from "vdl-angular";
+} from 'vdl-angular';
 
 /**
  * NgModule that includes all Vdlerial modules that are required to serve the demo-app.

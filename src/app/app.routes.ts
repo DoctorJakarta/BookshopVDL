@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { InventoryComponent } from './components/inventory/inventory.component';
+import { BookComponent } from './components/book/book.component';
+import { TagComponent } from './components/tag/tag.component';
 
 
 export const ROUTES: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'inventory', component: InventoryComponent }
+  { path: 'book/:pageType', component: BookComponent },
+  { path: 'tag/:pageType', component: TagComponent }
 ];

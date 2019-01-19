@@ -10,14 +10,20 @@ import { RouterModule, PreloadAllModules } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import './styles/global.scss';
 
-import { InventoryComponent } from './components/inventory/inventory.component';
 import { HomeComponent } from './components/home/home.component';
+
+import { ApiService } from './services/api.service';
+import { BookComponent } from './components/book/book.component';
+import { ReferenceComponent } from './components/reference/reference.component';
+import { TagComponent } from './components/tag/tag.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    InventoryComponent
+    BookComponent,
+    ReferenceComponent,
+    TagComponent
   ],
   imports: [
     HttpClientModule,
@@ -30,8 +36,8 @@ import { HomeComponent } from './components/home/home.component';
     })
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-
-  providers: [],
+  entryComponents: [ReferenceComponent],
+  providers: [ ApiService ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

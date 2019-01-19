@@ -1,22 +1,10 @@
-import {
-  Component,
-  ElementRef,
-  NgZone,
-  OnInit,
-  Renderer,
-  ViewChild
-} from '@angular/core';
+import { Component, ElementRef,  NgZone, OnInit, Renderer,  ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
-import {
-  VdlAutocompleteTrigger,
-  VdlIconRegistry,
-  VdlOption,
-  GlobalNotification,
-  GlobalHelp,
-  Category
-} from 'vdl-angular';
+import { VdlAutocompleteTrigger, VdlIconRegistry, VdlOption, GlobalNotification, GlobalHelp,  Category } from 'vdl-angular';
 import { NgModel } from '@angular/forms';
+import { ApiService } from './services/api.service';
+import { CacheService } from './services/cache.service';
 
 @Component({
   selector: 'app-root',
@@ -32,22 +20,23 @@ export class AppComponent implements OnInit {
 
   public categories: Category[] = [
     { displayName: 'Home', route: 'home', icon: 'fa-home' },
-    { displayName: 'Inventory', route: 'inventory', icon: 'fa-columns' }
+    { displayName: 'Books', route: 'book/List', icon: 'fa-columns' },
+    { displayName: 'Tags', route: 'tag/List', icon: 'fa-tags' }
   ];
 
-  constructor(
-    vdlIconRegistry: VdlIconRegistry,
-    private _sanitizer: DomSanitizer,
-    private _renderer: Renderer,
-    private _router: Router,
-    private _ngZone: NgZone,
-    private _elementRef: ElementRef
-  ) {
-    vdlIconRegistry.registerFontClassAlias('fontawesome', 'fa');
-    vdlIconRegistry.addSvgIcon(
-      'ux-veritas',
-      _sanitizer.bypassSecurityTrustResourceUrl('/assets/ux-veritas.svg')
-    );
+  constructor(private _apiService: ApiService, private _cacheService: CacheService,
+                vdlIconRegistry: VdlIconRegistry,
+                private _sanitizer: DomSanitizer,
+                private _renderer: Renderer,
+                private _router: Router,
+                private _ngZone: NgZone,
+                private _elementRef: ElementRef
+    ) {
+        vdlIconRegistry.registerFontClassAlias('fontawesome', 'fa');
+        vdlIconRegistry.addSvgIcon(
+        'ux-veritas',
+        _sanitizer.bypassSecurityTrustResourceUrl('/assets/ux-veritas.svg')
+        );
   }
 
 
@@ -66,8 +55,8 @@ export class AppComponent implements OnInit {
     categories: Category[],
     route: string
   ): Category | null {
-    let trimmedRoute: string = route.startsWith('/') ? route.substr(1) : route;
-    let trimmedCvRoute: string = '';
+    const trimmedRoute: string = route.startsWith('/') ? route.substr(1) : route;
+    let trimmedCvRoute = '';
 
     function reducer(pv: Category, cv: Category): Category {
       if (cv.subCategories && cv.subCategories.length > 0) {
@@ -81,17 +70,26 @@ export class AppComponent implements OnInit {
 
     return categories.reduce(reducer);
   }
-    public ngOnInit() {
-    this.selectedCategory = this.categories[0];
-    this._router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.selectedCategory = this.findCategoryByRoute(
-          this.categories,
-          event.urlAfterRedirects
+
+    getTags() {
+        this._apiService.readTags().subscribe(
+            success => { this._cacheService.setTags(success); },
+            error => this._apiService.handleError(error)
         );
-      }
-    });
-					 
-														   
+    }
+
+    public ngOnInit() {
+
+        this.getTags();
+
+        this.selectedCategory = this.categories[0];
+        this._router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+            this.selectedCategory = this.findCategoryByRoute(
+            this.categories,
+            event.urlAfterRedirects
+            );
+        }
+        });
   }
 }

@@ -1,0 +1,27 @@
+<vdl-dialog-header class="modal">
+  <vdl-dialog-title>
+    Reference
+  </vdl-dialog-title>
+  <vdl-dialog-header-actions>
+    <button vdl-icon-button vdl-dialog-close>
+      <vdl-icon fontSet="fontawesome" fontIcon="fa-close"></vdl-icon>
+    </button>
+  </vdl-dialog-header-actions>
+</vdl-dialog-header>
+
+<vdl-dialog-content>
+  <label for="name">Price:</label>
+  <input vdlInput type="text" name="eName" [(ngModel)]="reference.price" placeholder="Enter Price" size="120" autofocus>
+  <label for="name">URL:</label>
+  <input vdlInput type="text" name="eUrl" [(ngModel)]="reference.url" placeholder="Enter URL" size="120">
+  <label for="name">Description:</label>
+  <input vdlInput type="text" name="eDesc" [(ngModel)]="reference.desc" placeholder="Enter Description" size="120">
+  <label for="name">Comment:</label>
+  <input vdlInput type="text" name="eDesc" [(ngModel)]="reference.comment" placeholder="Enter Comment" size="120">
+</vdl-dialog-content>
+<vdl-dialog-actions>
+  <vdl-button-bar>
+    <button vdl-primary-button (click)="dialogRefEvidence.close(reference)">Save</button>
+    <button vdl-secondary-button vdl-dialog-close (click)="dialogRefEvidence.close()">Cancel</button>
+  </vdl-button-bar>
+</vdl-dialog-actions>
