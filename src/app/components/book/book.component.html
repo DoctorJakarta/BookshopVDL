@@ -23,7 +23,12 @@
         <vdl-checkbox label="Sold" [(ngModel)]="book.sold"></vdl-checkbox>
         <input vdlInput type="text" [(ngModel)]="book.dateSold" placeholder="YYYY-MM-DD"/>
     </vdl-form-field>
-     
+    <vdl-form-field label="Sale Status" class="smallField">
+        <vdl-select [(ngModel)]="book.status" >
+            <vdl-option *ngFor="let s of getSaleStatusKeys()" [value]="s">{{saleStatusNames.get(s)}}</vdl-option>
+        </vdl-select>
+    </vdl-form-field>
+
     <table border=1>
         <tr>
             <th>Price</th>
@@ -53,6 +58,7 @@
         </button>      
         {{r.price}}:  <a href='{{r.url}}' targer='_blank'>{{r.url}}</a>
     </div>
+    
     <div>
         <label for="options">Tags:</label>
         <div *ngFor="let cb of tagCheckboxMap | keyvalue ">

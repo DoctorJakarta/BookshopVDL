@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { CacheService } from '../../services/cache.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Book } from '../../model/book';
+import { Book, SALE_STATUS } from '../../model/book';
 import { Tag } from '../../model/tag';
 import { TagCheckbox } from '../../model/tag';
 import { Reference } from '../../model/reference';
@@ -28,6 +28,13 @@ export class BookComponent implements OnInit {
     PAGE_TYPE: typeof PAGE_TYPE = PAGE_TYPE;        // This exposed the enum to the HTML
     pageType = PAGE_TYPE.LIST_BOOKS;
 
+    SALE_STATUS: typeof SALE_STATUS = SALE_STATUS;    // This exposes the enum to the HTML
+    saleStatusNames = Book.getSaleStatusNames();
+    selectedSaleStatus = SALE_STATUS.SHELF;  
+
+
+
+
     books: any;
     book: any;
     tags: Tag[];
@@ -38,7 +45,7 @@ export class BookComponent implements OnInit {
     constructor(private _apiService: ApiService, private _cacheService: CacheService,
                 private dialog: VdlDialog,
                 private route: ActivatedRoute, private router: Router) {
-
+ 
         this.tags = _cacheService.getTags();
 
         this.route.params.subscribe(params => {
@@ -163,6 +170,10 @@ export class BookComponent implements OnInit {
         }
         return selectedTags;
     }
+
+    getSaleStatusKeys() {
+        return Array.from(this.saleStatusNames.keys());
+    } 
 
     ngOnInit() {
 
