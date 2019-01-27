@@ -1,0 +1,34 @@
+<vdl-title-bar title="Attributes"></vdl-title-bar>
+
+<vdl-panel *ngIf="attribute && (pageType==PAGE_TYPE.NEW_ATTRIBUTE || pageType==PAGE_TYPE.EDIT_ATTRIBUTE)" class="smallForm">
+    <vdl-form-field label="Name" class="smallField">
+        <input vdlInput type="text" [(ngModel)]="attribute.name"/>
+    </vdl-form-field>     
+    <vdl-form-field label="Values" class="smallField">
+         <textarea vdlInput type="text">TODO:  Add/Update Detail Values</textarea>
+        
+    </vdl-form-field>  
+    <!-- <button vdl-primary-button (click)="upsertAttribute(pageType==PAGE_TYPE.NEW_ATTRIBUTE)">{{pageType==PAGE_TYPE.NEW_ATTRIBUTE ? 'Create' : 'Update'}}</button> -->
+    <button vdl-secondary-button (click)="listAttributes()">Cancel</button>
+</vdl-panel>
+
+<vdl-panel *ngIf="pageType==PAGE_TYPE.LIST_ATTRIBUTES">
+    <button vdl-primary-button (click)='newAttribute()'>New Attribute</button>
+    <table cellpadding=20>
+		<tr>
+             <th>Name</th>
+             <th>Values</th>
+        </tr>
+		<tr *ngFor='let a of attributes'>
+			<td>{{a.name}}</td>
+            <td>
+                <button vdl-icon-button (click)="editAttribute(a.id)">
+                    <vdl-icon fontSet="fontawesome" fontIcon="fa-cog"></vdl-icon>
+                </button>
+            </td>
+            <td>
+                <ng-containter *ngFor='let d of a.details'> {{d.value}} | </ng-containter>
+            </td>      
+        </tr>
+	</table>
+</vdl-panel>

@@ -16,12 +16,12 @@
   <input vdlInput type="text" name="eUrl" [(ngModel)]="reference.url" placeholder="Enter URL" size="120">
   <label for="name">Description:</label>
   <input vdlInput type="text" name="eDesc" [(ngModel)]="reference.desc" placeholder="Enter Description" size="120">
-  <label for="name">Comment:</label>
-  <input vdlInput type="text" name="eDesc" [(ngModel)]="reference.comment" placeholder="Enter Comment" size="120">
+  <label for="name">Notes (private):</label>
+  <input vdlInput type="text" name="eDesc" [(ngModel)]="reference.notes" placeholder="Enter Notes" size="120">
 </vdl-dialog-content>
 <vdl-dialog-actions>
   <vdl-button-bar>
-    <button vdl-primary-button (click)="dialogRefEvidence.close(reference)">Save</button>
-    <button vdl-secondary-button vdl-dialog-close (click)="dialogRefEvidence.close()">Cancel</button>
+    <button vdl-primary-button (click)="dialogRefReference.close(reference)">Save</button>
+    <button vdl-secondary-button vdl-dialog-close (click)="dialogRefReference.close()">Cancel</button>
   </vdl-button-bar>
 </vdl-dialog-actions>

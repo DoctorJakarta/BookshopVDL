@@ -1,9 +1,6 @@
 <vdl-title-bar title="Tags"></vdl-title-bar>
 
 <vdl-panel *ngIf="tag && (pageType==PAGE_TYPE.NEW_TAG || pageType==PAGE_TYPE.EDIT_TAG)" class="smallForm">
-    <vdl-form-field label="Key" class="smallField">
-        <input vdlInput type="text" [(ngModel)]="tag.key" required/>
-    </vdl-form-field>
     <vdl-form-field label="Name" class="smallField">
         <input vdlInput type="text" [(ngModel)]="tag.name"/>
     </vdl-form-field>     

@@ -3,6 +3,8 @@ import { ApiService } from '../../services/api.service';
 import { CacheService } from '../../services/cache.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book, SALE_STATUS } from '../../model/book';
+import { Attribute, ATTR } from '../../model/attribute';
+import { Subject } from '../../model/subject';
 import { Tag } from '../../model/tag';
 import { TagCheckbox } from '../../model/tag';
 import { Reference } from '../../model/reference';
@@ -30,15 +32,20 @@ export class BookComponent implements OnInit {
 
     SALE_STATUS: typeof SALE_STATUS = SALE_STATUS;    // This exposes the enum to the HTML
     saleStatusNames = Book.getSaleStatusNames();
-    selectedSaleStatus = SALE_STATUS.SHELF;  
+    selectedSaleStatus = SALE_STATUS.PREP;  
 
+    // CONDITION: typeof CONDITION = CONDITION;    // This exposes the enum to the HTML
+    conditionList: string[] = new Array("New", "As New", "Fine", "Near Fine", "Very Good", "Good", "Fair", "Poor");
+    selectedCondition = "Very Good";  
 
+    attrCondition: Attribute;
 
+    subjects: Subject[] = [];
 
     books: any;
     book: any;
     tags: Tag[];
-    tagCheckboxMap: Map<string, TagCheckbox>;
+    tagCheckboxMap: Map<number, TagCheckbox>;
 
     reference: any;
 
@@ -46,7 +53,9 @@ export class BookComponent implements OnInit {
                 private dialog: VdlDialog,
                 private route: ActivatedRoute, private router: Router) {
  
+        this.subjects = _cacheService.getSubjects();
         this.tags = _cacheService.getTags();
+        this.attrCondition = _cacheService.getAttribute(ATTR.CONDITION);
 
         this.route.params.subscribe(params => {
             if (params['pageType']) this.pageType = params['pageType'];
@@ -166,7 +175,7 @@ export class BookComponent implements OnInit {
     getSelectedTags() {
         const selectedTags: Tag[] = [];
         for ( const t of this._cacheService.getTags() ) {
-            if (this.tagCheckboxMap.get(t.key).checked) selectedTags.push(t);
+            if (this.tagCheckboxMap.get(t.id).checked) selectedTags.push(t);
         }
         return selectedTags;
     }
@@ -174,6 +183,10 @@ export class BookComponent implements OnInit {
     getSaleStatusKeys() {
         return Array.from(this.saleStatusNames.keys());
     } 
+
+    // getConditionKeys() {
+    //     return Object.keys(this.CONDITION);
+    // } 
 
     ngOnInit() {
 

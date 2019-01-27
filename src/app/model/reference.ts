@@ -4,7 +4,7 @@ export class Reference {
   public price: number;
   public url: string;
   public desc: string;
-  public comment: string;
+  public notes: string;
 
   constructor( bookId: number ) {
       this.bookId = bookId;

@@ -1,0 +1,43 @@
+<vdl-title-bar title="Subjects"></vdl-title-bar>
+
+<vdl-panel *ngIf="subject && (pageType==PAGE_TYPE.NEW_SUBJECT || pageType==PAGE_TYPE.EDIT_SUBJECT)" class="smallForm">
+    <vdl-form-field label="Parent Name" class="smallField">
+        <input vdlInput type="text" [(ngModel)]="subject.parentName"/>
+    </vdl-form-field>     
+   <vdl-form-field label="Subject Name" class="smallField">
+        <input vdlInput type="text" [(ngModel)]="subject.subjectName"/>
+    </vdl-form-field>     
+   <vdl-form-field label="Code" class="smallField">
+        <input vdlInput type="text" [(ngModel)]="subject.code"/>
+    </vdl-form-field>     
+
+    <button vdl-primary-button (click)="upsertSubject(pageType==PAGE_TYPE.NEW_SUBJECT)">{{pageType==PAGE_TYPE.NEW_SUBJECT ? 'Create' : 'Update'}}</button>
+    <button vdl-secondary-button (click)="deleteSubject()">Delete</button>
+    <button vdl-secondary-button (click)="listSubjects()">Cancel</button>
+</vdl-panel>
+
+<vdl-panel *ngIf="pageType==PAGE_TYPE.LIST_SUBJECTS">
+    <button vdl-primary-button (click)='newSubject()'>New Subject</button>
+    <table cellpadding=20>
+		<tr>
+            <th>Parent Name</th>
+            <th>Subject Name</th>
+            <th>code</th>
+        </tr>
+		<tr *ngFor='let s of subjects'>
+			<td>{{s.parentName}}</td>
+			<td>{{s.subjectName}}</td>
+			<td>{{s.code}}</td>
+            <td>
+                <button vdl-icon-button (click)="editSubject(s.id)">
+                    <vdl-icon fontSet="fontawesome" fontIcon="fa-cog"></vdl-icon>
+                </button>
+            </td>
+            <td>
+                <button vdl-icon-button (click)="deleteSubject(s.id)">
+                    <vdl-icon fontSet="fontawesome" fontIcon="fa-trash"></vdl-icon>
+                </button>
+            </td>      
+        </tr>
+	</table>
+</vdl-panel>

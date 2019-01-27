@@ -1,16 +1,21 @@
-.smallForm{
+
+.bookForm{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
     padding: 20px;
 }
 .smallField{
-    width: 400px;
+    width: 350px;
     padding: -30px 0px;
     display: block;
 }
 
 td input{
-     width: 70px;
+     width: 40px;
      display: inline;
      text-align: right;
      padding: 0px 5px;
-     font-size: x-large;
+     font-size: large;
 }

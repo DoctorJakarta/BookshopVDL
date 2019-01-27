@@ -18,11 +18,18 @@ export class AppComponent implements OnInit {
   public inputTypeahead: string;
   public inputValue: any;
 
+
   public categories: Category[] = [
     { displayName: 'Home', route: 'home', icon: 'fa-home' },
     { displayName: 'Books', route: 'book/List', icon: 'fa-columns' },
-    { displayName: 'Tags', route: 'tag/List', icon: 'fa-tags' }
-  ];
+    { displayName: 'Configuration', icon: 'fa-cog', expanded: true,
+        subCategories:[
+            { displayName: 'Attributes', route: 'attribute/List', icon: 'fa-list-alt' },
+            { displayName: 'Subjects', route: 'subject/List', icon: 'fa-sitemap' },
+            { displayName: 'Tags', route: 'tag/List', icon: 'fa-tags' }
+        ]
+    }
+   ];
 
   constructor(private _apiService: ApiService, private _cacheService: CacheService,
                 vdlIconRegistry: VdlIconRegistry,
@@ -78,9 +85,30 @@ export class AppComponent implements OnInit {
         );
     }
 
+    getAttributes() {
+        this._apiService.readAttributes().subscribe(
+            success => {  
+                const attributeNames = success; 
+                for ( const name of attributeNames ) {
+                    console.log("Got attribute Name: " + name);
+                    this.getAttribute(999);
+                }
+            },
+            error => this._apiService.handleError(error)
+        );    
+    }
+
+    getAttribute(id: number) {
+        this._apiService.readAttribute(id).subscribe(
+            success => {  this._cacheService.addAttribute(success); },
+            error => this._apiService.handleError(error)
+        );    
+    }
     public ngOnInit() {
 
         this.getTags();
+        this.getAttributes();
+
 
         this.selectedCategory = this.categories[0];
         this._router.events.subscribe(event => {

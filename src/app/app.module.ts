@@ -15,7 +15,10 @@ import { HomeComponent } from './components/home/home.component';
 import { ApiService } from './services/api.service';
 import { BookComponent } from './components/book/book.component';
 import { ReferenceComponent } from './components/reference/reference.component';
+import { AttributeComponent } from './components/attribute/attribute.component';
 import { TagComponent } from './components/tag/tag.component';
+import { SubjectComponent } from './components/subject/subject.component';
+import { DetailComponent } from './components/detail/detail.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { TagComponent } from './components/tag/tag.component';
     HomeComponent,
     BookComponent,
     ReferenceComponent,
-    TagComponent
+    AttributeComponent,
+    TagComponent,
+    SubjectComponent,
+    DetailComponent
   ],
   imports: [
     HttpClientModule,

@@ -1,6 +1,9 @@
 import { Book } from '../model/book';
-import { Tag } from '../model/tag';
 import { Reference } from '../model/reference';
+import { Attribute } from '../model/attribute';
+import { Detail } from '../model/detail';
+import { Subject } from '../model/subject';
+import { Tag } from '../model/tag';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -96,5 +99,66 @@ export class ApiService {
 
   deleteTag(key: string) {
     return this.http.delete<Array<string>>(_service + 'tag/' + key, {headers: _myHeaders} );
+  }
+
+  //
+  // Subject Services
+  //
+
+  readSubjects() {
+    return this.http.get<Array<string>>(_service + 'subject');
+  }
+
+  readSubject(id: number) {
+    return this.http.get<Array<string>>(_service + 'subject/' + id);
+  }
+
+  createSubject(subject: Subject) {
+    return this.http.post<Array<string>>(_service + 'subject', JSON.stringify(subject), {headers: _myHeaders} );
+  }
+
+  updateSubject(subject: Subject) {
+    return this.http.put<Array<string>>(_service + 'subject', JSON.stringify(subject), {headers: _myHeaders} );
+  }
+
+  deleteSubject(id: number) {
+    return this.http.delete<Array<string>>(_service + 'subject/' + id, {headers: _myHeaders} );
+  }
+
+  //
+  // Attribute Services
+  //
+
+  readAttributes() {
+    return this.http.get<Array<string>>(_service + 'attribute');
+  }
+
+
+  readAttribute(id: number) {
+    return this.http.get<Array<string>>(_service + 'attribute/' + id);
+  }
+
+  //
+  // Detail Services
+  //
+
+  readDetails() {
+    return this.http.get<Array<string>>(_service + 'detail');
+  }
+
+  readDetail(id: number) {
+    return this.http.get<Array<string>>(_service + 'detail/' + id);
+  }
+
+  createDetail(detail: Detail) {
+    return this.http.post<Array<string>>(_service + 'detail', JSON.stringify(detail), {headers: _myHeaders} );
+  }
+
+  updateDetail(detail: Detail) {
+    return this.http.put<Array<string>>(_service + 'detail', JSON.stringify(detail), {headers: _myHeaders} );
+  }
+
+  deleteDetail(id: number) {
+    return this.http.delete<Array<string>>(_service + 'detail/' + id, {headers: _myHeaders} );
   }
 }

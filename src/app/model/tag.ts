@@ -1,15 +1,15 @@
 export class Tag {
-  public key: string;
+  public id: number;
   public name: string;
  }
 
 export class TagCheckbox {
-  public key: string;
+  public id: number;
   public name: string;
   public checked = false;
 
   constructor ( t: Tag ) {
-      this.key = t.key;
+      this.id = t.id;
       this.name = t.name;
   }
 }
