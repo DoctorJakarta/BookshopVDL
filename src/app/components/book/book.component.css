@@ -6,12 +6,19 @@
     justify-content: space-between;
     padding: 20px;
 }
-.smallField{
+.mediumField{
     width: 350px;
     padding: -30px 0px;
     display: block;
 }
-
+.smallField{
+    width: 235px;
+    padding: -30px 0px;
+}
+.tinyField{
+    width: 115px;
+    padding: -30px 0px;
+}
 td input{
      width: 40px;
      display: inline;

@@ -35,10 +35,12 @@ export class BookComponent implements OnInit {
     selectedSaleStatus = SALE_STATUS.PREP;  
 
     // CONDITION: typeof CONDITION = CONDITION;    // This exposes the enum to the HTML
-    conditionList: string[] = new Array("New", "As New", "Fine", "Near Fine", "Very Good", "Good", "Fair", "Poor");
-    selectedCondition = "Very Good";  
+    // conditionList: string[] = new Array("New", "As New", "Fine", "Near Fine", "Very Good", "Good", "Fair", "Poor");
+    // selectedCondition = "Very Good";  
 
+    attrBinding: Attribute;
     attrCondition: Attribute;
+    attrSize: Attribute;
 
     subjects: Subject[] = [];
 
@@ -49,13 +51,13 @@ export class BookComponent implements OnInit {
 
     reference: any;
 
+    year: number;
+
     constructor(private _apiService: ApiService, private _cacheService: CacheService,
                 private dialog: VdlDialog,
                 private route: ActivatedRoute, private router: Router) {
  
-        this.subjects = _cacheService.getSubjects();
-        this.tags = _cacheService.getTags();
-        this.attrCondition = _cacheService.getAttribute(ATTR.CONDITION);
+        this.getCacheLists();
 
         this.route.params.subscribe(params => {
             if (params['pageType']) this.pageType = params['pageType'];
@@ -68,16 +70,41 @@ export class BookComponent implements OnInit {
                 case PAGE_TYPE.EDIT_BOOK: 
                     this.book = this.getBook( params['bookId'] );
                     break;
-                case PAGE_TYPE.LIST_BOOKS: this.books = this.getBooks();
+                case PAGE_TYPE.LIST_BOOKS: 
+                    if (params['query']){
+                        this.year = params['query'];
+                        this.books = this.searchByYear(this.year);
+                    } 
+                    else this.books = this.getBooks();
+                    break;          
            }
         });
-
-
     }
 
     listBooks() { this.router.navigate(['book', PAGE_TYPE.LIST_BOOKS]); }
     newBook() { this.router.navigate(['book', PAGE_TYPE.NEW_BOOK]); }
     editBook(id: number) { this.router.navigate(['book', PAGE_TYPE.EDIT_BOOK, { bookId: id} ] ); }
+
+    getCacheLists(){
+        this.subjects = this._cacheService.getSubjects();
+        this.tags = this._cacheService.getTags();
+        this.attrBinding = this._cacheService.getAttribute(ATTR.BINDING);
+        this.attrCondition = this._cacheService.getAttribute(ATTR.CONDITION);
+        this.attrSize = this._cacheService.getAttribute(ATTR.SIZE);
+    }
+
+    searchBooks() { 
+        this.router.navigate(['book', PAGE_TYPE.LIST_BOOKS, { query: this.year} ] ); 
+    }
+
+    searchByYear(year: number){
+        this._apiService.searchBooksByYear(year).subscribe(
+            success => {
+                this.books = success;
+            },
+            error => this._apiService.handleError(error)
+        );
+    }
 
     getBooks() {
         this._apiService.readBooks().subscribe(

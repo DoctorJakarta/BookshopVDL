@@ -31,9 +31,9 @@ export class SubjectComponent implements OnInit {
             if (params['pageType']) this.pageType = params['pageType'];
 
             switch (this.pageType) {
-                case PAGE_TYPE.NEW_SUBJECT: this.subject = new Subject(); break;
+                case PAGE_TYPE.NEW_SUBJECT: this.subject = new Subject(null,null,null); break;
                 case PAGE_TYPE.EDIT_SUBJECT: this.subject = this.getSubject( params['subjectId'] ); break;
-                case PAGE_TYPE.LIST_SUBJECTS: this.subjects = this.getSubjectList();
+                case PAGE_TYPE.LIST_SUBJECTS: this.subjects = this.getSubjects();
            }
         });
 
@@ -44,7 +44,7 @@ export class SubjectComponent implements OnInit {
     newSubject() { this.router.navigate(['subject', PAGE_TYPE.NEW_SUBJECT]); }
     editSubject(id: number) { this.router.navigate(['subject', PAGE_TYPE.EDIT_SUBJECT, { subjectId: id} ] ); }
 
-    getSubjectList() {
+    getSubjects() {
         this._apiService.readSubjects().subscribe(
             success => {
                 this.subjects = success;

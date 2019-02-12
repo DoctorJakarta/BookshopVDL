@@ -14,21 +14,22 @@
 
 <vdl-panel *ngIf="pageType==PAGE_TYPE.LIST_ATTRIBUTES">
     <button vdl-primary-button (click)='newAttribute()'>New Attribute</button>
-    <table cellpadding=20>
+    <table class="vdl-data-table material striped">
 		<tr>
+             <th colspan=2></th>
              <th>Name</th>
              <th>Values</th>
         </tr>
-		<tr *ngFor='let a of attributes'>
-			<td>{{a.name}}</td>
-            <td>
+		<tr [ngClass]="{'data-table-row-odd':o}" *ngFor='let a of attributes; let o=odd;'>
+            <td align=center>
                 <button vdl-icon-button (click)="editAttribute(a.id)">
                     <vdl-icon fontSet="fontawesome" fontIcon="fa-cog"></vdl-icon>
                 </button>
             </td>
-            <td>
-                <ng-containter *ngFor='let d of a.details'> {{d.value}} | </ng-containter>
-            </td>      
+            <td>{{a.name}}</td>
+            <td>            
+                 <ng-containter *ngFor='let d of a.details'> {{d.value}} | </ng-containter>
+            </td> 
         </tr>
 	</table>
 </vdl-panel>

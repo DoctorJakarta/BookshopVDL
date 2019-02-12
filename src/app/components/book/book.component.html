@@ -1,51 +1,62 @@
-<vdl-title-bar title="Books"></vdl-title-bar>
-
 <vdl-panel *ngIf="book && (pageType==PAGE_TYPE.NEW_BOOK || pageType==PAGE_TYPE.EDIT_BOOK)">
+<vdl-title-bar title="Book Details"></vdl-title-bar>
+
     <div class="bookForm">
         <div>
-            <vdl-form-field label="Year" class="smallField">
-                <input vdlInput type="text" [(ngModel)]="book.year"/>
-            </vdl-form-field>
-            <vdl-form-field label="Title" class="smallField">
-                <input vdlInput type="text" [(ngModel)]="book.title" required/>
-            </vdl-form-field>
-            <vdl-form-field label="Author" class="smallField">
+                 <vdl-form-field label="Year" class="tinyField">
+                    <input vdlInput type="text" [(ngModel)]="book.year"/>
+                </vdl-form-field>
+          <vdl-form-field label="Author" class="smallField">
                 <input vdlInput type="text" [(ngModel)]="book.author"/>
             </vdl-form-field>
-            <vdl-form-field label="Condition" class="smallField">
+           <vdl-form-field label="Title" class="mediumField">
+                <input vdlInput type="text" [(ngModel)]="book.title"/>
+            </vdl-form-field>
+
+           <vdl-form-field label="Condition" class="tinyField">
                 <vdl-select [(ngModel)]="book.condition" >
-                    <vdl-option *ngFor="let c of conditionList" [value]="c">{{c}}</vdl-option>
+                    <vdl-option *ngFor="let detail of attrCondition.details" [value]="detail.value">{{detail.value}}</vdl-option>
                 </vdl-select>
             </vdl-form-field>
+            <vdl-form-field label="Pages" class="smallField">
+                <input vdlInput type="text" [(ngModel)]="book.pages"/>
+            </vdl-form-field>
+
+
+            
+
+
        </div>
         <div>
-            <vdl-form-field label="Publisher" class="smallField">
+            <vdl-form-field label="Publisher" class="mediumField">
                 <input vdlInput type="text" [(ngModel)]="book.publisher"/>
             </vdl-form-field>
-            <vdl-form-field label="Publisher Place" class="smallField">
+            <vdl-form-field label="Publisher Place" class="mediumField">
                 <input vdlInput type="text" [(ngModel)]="book.publisherPlace"/>
             </vdl-form-field>
-            <vdl-form-field label="Edition" class="smallField">
+            <vdl-form-field label="Edition" class="tinyField">
                 <input vdlInput type="text" [(ngModel)]="book.edition" placeholder="1st Edition"/>
             </vdl-form-field>
-                <vdl-form-field label="Printing" class="smallField">
+                <vdl-form-field label="Printing" class="tinyField">
                 <input vdlInput type="text" [(ngModel)]="book.printing" placeholder="5th Printing"/>
             </vdl-form-field>
 
+
+
         </div>
     <div>
-        <vdl-form-field label="Date Bought" class="smallField">
-            <input vdlInput type="text" [(ngModel)]="book.dateBought" placeholder="YYYY-MM-DD"/>
-        </vdl-form-field>
-        <vdl-form-field label="Date Sold" class="smallField">
-            <input vdlInput type="text" [(ngModel)]="book.dateSold" placeholder="YYYY-MM-DD"/>
-        </vdl-form-field>
-        <vdl-form-field label="Sale Status" class="smallField">
-            <vdl-select [(ngModel)]="book.status" >
-                <vdl-option *ngFor="let s of getSaleStatusKeys()" [value]="s">{{saleStatusNames.get(s)}}</vdl-option>
-            </vdl-select>
-        </vdl-form-field>
-        <table border=1>
+            <vdl-form-field label="Size" class="tinyField">
+                <vdl-select [(ngModel)]="book.size" >
+                    <vdl-option></vdl-option>
+                    <vdl-option *ngFor="let detail of attrSize.details" [value]="detail.value">{{detail.value}}</vdl-option>
+               </vdl-select>
+            </vdl-form-field>
+            <vdl-form-field label="Binding" class="tinyField">
+                <vdl-select [(ngModel)]="book.binding" >
+                    <vdl-option *ngFor="let detail of attrBinding.details" [value]="detail.value">{{detail.value}}</vdl-option>
+                </vdl-select>
+            </vdl-form-field>
+         <table border=1>
             <tr>
                 <th>Price</th>
                 <th>Price Bought</th>
@@ -59,6 +70,19 @@
                 <td style="color:grey">$ <input vdlInput type="text" [(ngModel)]="book.priceMax"/>.00</td>
             </tr>
         </table>
+        <vdl-form-field label="Date Bought" class="tinyField">
+            <input vdlInput type="text" [(ngModel)]="book.dateBought" placeholder="YYYY-MM-DD"/>
+        </vdl-form-field>
+        <vdl-form-field label="Date Sold" class="tinyField">
+            <input vdlInput type="text" [(ngModel)]="book.dateSold" placeholder="YYYY-MM-DD"/>
+        </vdl-form-field>
+        <vdl-form-field label="Sale Status" class="tinyField">
+            <vdl-select [(ngModel)]="book.status" >
+                <vdl-option *ngFor="let s of getSaleStatusKeys()" [value]="s">{{saleStatusNames.get(s)}}</vdl-option>
+            </vdl-select>
+        </vdl-form-field>
+
+
     </div>
 
     <vdl-form-field VdlTextareaAutosize label="Description">
@@ -68,9 +92,10 @@
     <vdl-form-field VdlTextareaAutosize label="Private Notes">
         <textarea vdlInput type="text" [(ngModel)]="book.notes"></textarea>
     </vdl-form-field>
-    <vdl-form-field label="Subject" class="smallField">
-            <vdl-select [(ngModel)]="book.subject.id" >
-                <vdl-option *ngFor="let s of subjects" [value]="s.id">{{s.parentName}}: {{s.subjectName}}</vdl-option>
+    <vdl-form-field label="Subject" class="mediumField">    
+            Current subject: {{book.subject?.parentName}}: {{book.subject?.subjectName}}
+            <vdl-select [(ngModel)]="book.subject" >
+                <vdl-option *ngFor="let s of subjects" [value]="s">{{s.parentName}}: {{s.subjectName}}</vdl-option>
             </vdl-select>
    </vdl-form-field>   
 
@@ -109,13 +134,21 @@
 </vdl-panel>
 
 <vdl-panel *ngIf="pageType==PAGE_TYPE.LIST_BOOKS">
-    <button vdl-primary-button (click)='newBook()'>New Book</button>
-    <table cellpadding=20>
+<vdl-title-bar title="Book List"></vdl-title-bar>
+    <fieldset style='width: 100%'>
+        <legend>Seach books:</legend>
+            <input type="text" width=4 [(ngModel)]="year"/>
+            <button (click)="searchBooks()">Submit</button>
+    </fieldset> 
+   <button vdl-primary-button (click)='newBook()'>New Book</button>
+    <table class="vdl-data-table material striped">
 		<tr>
+            <th colspan=2></th>
             <th colspan=3></th>
             <th colspan=4>Price</th>
         </tr>
 		<tr>
+            <th colspan=2></th>
             <th>Year</th>
             <th>Author</th>
             <th>Title</th>
@@ -125,7 +158,17 @@
             <th>Max</th>
             <th>Sold</th>
         </tr>
-		<tr *ngFor='let b of books'>
+		<tr [ngClass]="{'data-table-row-odd':o}" *ngFor='let b of books; let o=odd;'>
+            <td align=center>
+                <button vdl-icon-button (click)="editBook(b.id)">
+                    <vdl-icon fontSet="fontawesome" fontIcon="fa-cog"></vdl-icon>
+                </button>
+            </td>
+            <td align=center>
+                <button vdl-icon-button (click)="deleteBook(b.id)">
+                    <vdl-icon fontSet="fontawesome" fontIcon="fa-trash"></vdl-icon>
+                </button>
+            </td>      
 			<td>{{b.year}}</td>
 			<td>{{b.author}}</td>
 			<td>{{b.title}}
@@ -140,20 +183,9 @@
 			<td>{{b.priceBought}}</td>
 			<td>{{b.priceMin}}</td>
 			<td>{{b.priceMax}}</td>
-            <td>
-                <button vdl-icon-button (click)="editBook(b.id)">
-                    <vdl-icon fontSet="fontawesome" fontIcon="fa-cog"></vdl-icon>
-                </button>
-            </td>
-            <td>
-                <button vdl-icon-button (click)="deleteBook(b.id)">
-                    <vdl-icon fontSet="fontawesome" fontIcon="fa-trash"></vdl-icon>
-                </button>
-            </td>      
+
         </tr>
 	</table>
-List books
-
 </vdl-panel>
 
 

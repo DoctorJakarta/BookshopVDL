@@ -84,8 +84,16 @@ export class AppComponent implements OnInit {
             error => this._apiService.handleError(error)
         );
     }
-
     getAttributes() {
+        this._apiService.readAttributes().subscribe(
+            success => {
+                this._cacheService.setAttributes(success);            // Cache is refreshed whenever List is called, which happens after New/Update
+            },
+            error => this._apiService.handleError(error)
+        );
+    }
+
+/*     getAttributes() {
         this._apiService.readAttributes().subscribe(
             success => {  
                 const attributeNames = success; 
@@ -96,18 +104,29 @@ export class AppComponent implements OnInit {
             },
             error => this._apiService.handleError(error)
         );    
+    } */
+
+    // getAttribute(id: number) {
+    //     this._apiService.readAttribute(id).subscribe(
+    //         success => {  this._cacheService.addAttribute(success); },
+    //         error => this._apiService.handleError(error)
+    //     );    
+    // }
+
+    getSubjects() {
+        this._apiService.readSubjects().subscribe(
+            success => {
+               this._cacheService.setSubjects(success);            // Cache is refreshed whenever List is called, which happens after New/Update
+            },
+            error => this._apiService.handleError(error)
+        );
     }
 
-    getAttribute(id: number) {
-        this._apiService.readAttribute(id).subscribe(
-            success => {  this._cacheService.addAttribute(success); },
-            error => this._apiService.handleError(error)
-        );    
-    }
     public ngOnInit() {
 
         this.getTags();
         this.getAttributes();
+        this.getSubjects();
 
 
         this.selectedCategory = this.categories[0];

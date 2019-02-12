@@ -1,7 +1,9 @@
 import { Detail } from './detail';
 
 export enum ATTR {
-    CONDITION='Condition'
+    BINDING='Binding',
+    CONDITION='Condition',
+    SIZE='Size'
 }
 
 export class Attribute {

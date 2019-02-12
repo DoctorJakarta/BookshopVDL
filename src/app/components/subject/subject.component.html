@@ -18,26 +18,28 @@
 
 <vdl-panel *ngIf="pageType==PAGE_TYPE.LIST_SUBJECTS">
     <button vdl-primary-button (click)='newSubject()'>New Subject</button>
-    <table cellpadding=20>
+    <table class="vdl-data-table material striped">
 		<tr>
+            <th colspan=2></th>
             <th>Parent Name</th>
             <th>Subject Name</th>
             <th>code</th>
         </tr>
-		<tr *ngFor='let s of subjects'>
-			<td>{{s.parentName}}</td>
-			<td>{{s.subjectName}}</td>
-			<td>{{s.code}}</td>
-            <td>
+		<tr  [ngClass]="{'data-table-row-odd':o}" *ngFor='let s of subjects; let o=odd;'>
+            <td align=center>
                 <button vdl-icon-button (click)="editSubject(s.id)">
                     <vdl-icon fontSet="fontawesome" fontIcon="fa-cog"></vdl-icon>
                 </button>
             </td>
-            <td>
+            <td align=center>
                 <button vdl-icon-button (click)="deleteSubject(s.id)">
                     <vdl-icon fontSet="fontawesome" fontIcon="fa-trash"></vdl-icon>
                 </button>
-            </td>      
+            </td>
+			<td>{{s.parentName}}</td>
+			<td>{{s.subjectName}}</td>
+			<td>{{s.code}}</td>
+      
         </tr>
 	</table>
 </vdl-panel>

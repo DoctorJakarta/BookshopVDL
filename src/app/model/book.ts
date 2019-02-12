@@ -1,3 +1,4 @@
+import { Subject } from './subject';
 import { Tag } from './tag';
 import { Reference } from './reference';
 
@@ -50,6 +51,8 @@ export class Book {
     public year: number;
     public edition: string;
     public printing: string;
+    public size: 'quarto';
+    public pages: string;
 
     public desc: string;
     public notes: string;
@@ -67,6 +70,8 @@ export class Book {
 
     public references: Reference[];
     public tags: Tag[];
+
+    public subject = new Subject(16,'Science', 'General');
 
     public static getSaleStatusNames() { return SaleStatusNames; }
     // public static getConditionNames() { return SaleStatusNames; }

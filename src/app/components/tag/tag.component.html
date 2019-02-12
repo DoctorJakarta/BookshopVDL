@@ -12,24 +12,23 @@
 
 <vdl-panel *ngIf="pageType==PAGE_TYPE.LIST_TAGS">
     <button vdl-primary-button (click)='newTag()'>New Tag</button>
-    <table cellpadding=20>
+    <table class="vdl-data-table material striped">
 		<tr>
-            <th>Key</th>
+            <th colspan=2></th>
             <th>Name</th>
         </tr>
-		<tr *ngFor='let t of tags'>
-			<td>{{t.key}}</td>
-			<td>{{t.name}}</td>
-            <td>
+		<tr [ngClass]="{'data-table-row-odd':o}" *ngFor='let t of tags; let o=odd;'>
+            <td align=center>
                 <button vdl-icon-button (click)="editTag(t.key)">
                     <vdl-icon fontSet="fontawesome" fontIcon="fa-cog"></vdl-icon>
                 </button>
             </td>
-            <td>
+            <td align=center>
                 <button vdl-icon-button (click)="deleteTag(t.key)">
                     <vdl-icon fontSet="fontawesome" fontIcon="fa-trash"></vdl-icon>
                 </button>
-            </td>      
+            </td>   
+			<td>{{t.name}}</td>  
         </tr>
 	</table>
 </vdl-panel>
