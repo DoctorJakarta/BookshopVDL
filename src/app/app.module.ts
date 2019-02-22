@@ -19,6 +19,7 @@ import { AttributeComponent } from './components/attribute/attribute.component';
 import { TagComponent } from './components/tag/tag.component';
 import { SubjectComponent } from './components/subject/subject.component';
 import { DetailComponent } from './components/detail/detail.component';
+import { ExportComponent } from './components/export/export.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { DetailComponent } from './components/detail/detail.component';
     AttributeComponent,
     TagComponent,
     SubjectComponent,
-    DetailComponent
+    DetailComponent,
+    ExportComponent
   ],
   imports: [
     HttpClientModule,

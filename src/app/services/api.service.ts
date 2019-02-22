@@ -56,6 +56,10 @@ export class ApiService {
   
   searchBooksByYear(year: number) {
     return this.http.get<Array<string>>(_service + 'book/year/' + year, {headers: _myHeaders} );
+  }  
+
+  searchBooksByStatus(status: string) {
+    return this.http.get<Array<string>>(_service + 'book/status/' + status, {headers: _myHeaders} );
   }
 
   //

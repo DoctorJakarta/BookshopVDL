@@ -51,10 +51,14 @@ export class Book {
     public year: number;
     public edition: string;
     public printing: string;
+    public volume: string;
     public size: 'quarto';
     public pages: string;
+    public binding = 'Cloth';
+    public condition = 'Good';
 
-    public desc: string;
+    public details: string;
+    public contents: string;
     public notes: string;
 
     public price: number;
@@ -65,9 +69,9 @@ export class Book {
     public dateBought: string;
     public dateSold: string;
 
+    public urlRelative: string;
     public status = SALE_STATUS.PREP;
-    public condition = 'Very Good';
-
+ 
     public references: Reference[];
     public tags: Tag[];
 

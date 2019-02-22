@@ -25,6 +25,9 @@ export enum PAGE_TYPE {
 })
 
 export class BookComponent implements OnInit {
+
+    BASE_URL = 'http://localhost/books/';
+
     public dialogRef: VdlDialogRef<ReferenceComponent>;
 
     PAGE_TYPE: typeof PAGE_TYPE = PAGE_TYPE;        // This exposed the enum to the HTML
@@ -215,6 +218,9 @@ export class BookComponent implements OnInit {
     //     return Object.keys(this.CONDITION);
     // } 
 
+    launchImageUrl(url: string){
+        window.open(this.BASE_URL + url, '_blank');
+    }
     ngOnInit() {
 
     }

@@ -1,0 +1,41 @@
+<div id="print-section">
+    <table>
+
+		<tr>
+            <th>Year</th>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Price</th>
+
+        </tr>
+		<tr *ngFor='let b of books; let o=odd;'>  
+			<td>{{b.year}}</td>
+			<td>{{b.author}}</td>
+			<td>{{b.title}} </td>
+			<td>{{b.price}}</td>
+
+
+        </tr>
+	</table>
+</div>
+
+<button vdl-primary-button (click)="print()">Print</button>
+
+    <table>
+
+		<tr>
+            <th>Year</th>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Price</th>
+
+        </tr>
+		<tr *ngFor='let b of books; let o=odd;'>  
+			<td>{{b.year}}</td>
+			<td>{{b.author}}</td>
+			<td>{{b.title}} </td>
+			<td>{{b.price}}</td>
+
+
+        </tr>
+	</table>
