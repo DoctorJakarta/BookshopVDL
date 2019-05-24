@@ -1,3 +1,29 @@
+<div id="print-section">
+    <table border=1 >
+		<tr>
+            <th>Id</th>
+            <th>Year</th>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Price</th>
+
+        </tr>
+		<tr *ngFor='let b of books; let o=odd;'>  
+			<td>{{b.id}}</td>
+			<td>{{b.year}}</td>
+			<td>{{b.author}}</td>
+			<td>{{b.title}} </td>
+			<td>{{b.price}}</td>
+
+
+        </tr>
+	</table>
+</div>
+
+<vdl-panel *ngIf="book && (pageType==PAGE_TYPE.EXPORT_BOOKS)">
+    {{ books | json }}
+</vdl-panel>
+
 <vdl-panel *ngIf="book && (pageType==PAGE_TYPE.NEW_BOOK || pageType==PAGE_TYPE.EDIT_BOOK)">
 <vdl-title-bar title="Book Details"></vdl-title-bar>
 
@@ -148,10 +174,19 @@
 <vdl-title-bar title="Book List"></vdl-title-bar>
     <fieldset style='width: 100%'>
         <legend>Seach books:</legend>
-            <input type="text" width=4 [(ngModel)]="year"/>
-            <button (click)="searchBooks()">Submit</button>
+            <input type="text" [(ngModel)]="searchValue"/>
+            <button (click)="searchBooks(SEARCH_TYPE.YEAR)">By Year</button>
+            <button (click)="searchBooks(SEARCH_TYPE.AUTHOR)">By Author</button>
     </fieldset> 
+
+
    <button vdl-primary-button (click)='newBook()'>New Book</button>
+
+   <button vdl-secondary-button (click)="exportBooks()">Export</button>
+
+   <button vdl-secondary-button (click)="print()">Print</button>
+
+
     <table class="vdl-data-table material striped">
 		<tr>
             <th colspan=2></th>
@@ -159,7 +194,7 @@
             <th colspan=4>Price</th>
         </tr>
 		<tr>
-            <th colspan=2></th>
+            <th></th>
             <th>ID</th>
             <th>URL</th>
             <th>Year</th>
@@ -170,18 +205,14 @@
             <th>Min</th>
             <th>Max</th>
             <th>Sold</th>
-        </tr>
+            <th></th>
+       </tr>
 		<tr [ngClass]="{'data-table-row-odd':o}" *ngFor='let b of books; let o=odd;'>
             <td align=center>
                 <button vdl-icon-button (click)="editBook(b.id)">
                     <vdl-icon fontSet="fontawesome" fontIcon="fa-cog"></vdl-icon>
                 </button>
             </td>
-            <td align=center>
-                <button vdl-icon-button (click)="deleteBook(b.id)">
-                    <vdl-icon fontSet="fontawesome" fontIcon="fa-trash"></vdl-icon>
-                </button>
-            </td>      
 			<td align=right>{{b.id}}</td>
             <td align=center>
                 <button *ngIf="b.urlRelative" vdl-icon-button (click)=launchImageUrl(b.urlRelative)>
@@ -202,6 +233,12 @@
 			<td>{{b.priceBought}}</td>
 			<td>{{b.priceMin}}</td>
 			<td>{{b.priceMax}}</td>
+			<td>{{b.dateSold}}</td>
+            <td align=center>
+                <button vdl-icon-button (click)="deleteBook(b.id)">
+                    <vdl-icon fontSet="fontawesome" fontIcon="fa-trash"></vdl-icon>
+                </button>
+            </td>      
 
         </tr>
 	</table>

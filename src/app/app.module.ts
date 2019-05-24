@@ -8,7 +8,7 @@ import { VdlModule } from './vdl-module';
 import { ROUTES } from './app.routes';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import './styles/global.scss';
+//import './styles/global.scss';
 
 import { HomeComponent } from './components/home/home.component';
 

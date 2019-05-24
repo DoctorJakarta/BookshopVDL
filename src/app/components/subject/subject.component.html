@@ -12,7 +12,7 @@
     </vdl-form-field>     
 
     <button vdl-primary-button (click)="upsertSubject(pageType==PAGE_TYPE.NEW_SUBJECT)">{{pageType==PAGE_TYPE.NEW_SUBJECT ? 'Create' : 'Update'}}</button>
-    <button vdl-secondary-button (click)="deleteSubject()">Delete</button>
+    <button vdl-secondary-button (click)="deleteSubject(subject.id)">Delete</button>
     <button vdl-secondary-button (click)="listSubjects()">Cancel</button>
 </vdl-panel>
 

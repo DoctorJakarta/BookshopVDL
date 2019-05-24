@@ -15,7 +15,12 @@ import { VdlDialogRef, VdlDialog, VdlDialogConfig } from 'vdl-angular';
 export enum PAGE_TYPE {
     LIST_BOOKS = 'List',
     NEW_BOOK = 'New',
-    EDIT_BOOK = 'Edit'
+    EDIT_BOOK = 'Edit',
+    EXPORT_BOOKS = 'Export'
+}
+export enum SEARCH_TYPE {
+    YEAR = 'year',
+    AUTHOR = 'author'
 }
 
 @Component({
@@ -29,6 +34,8 @@ export class BookComponent implements OnInit {
     BASE_URL = 'http://localhost/books/';
 
     public dialogRef: VdlDialogRef<ReferenceComponent>;
+
+    SEARCH_TYPE: typeof SEARCH_TYPE = SEARCH_TYPE;        // This exposed the enum to the HTML
 
     PAGE_TYPE: typeof PAGE_TYPE = PAGE_TYPE;        // This exposed the enum to the HTML
     pageType = PAGE_TYPE.LIST_BOOKS;
@@ -54,7 +61,8 @@ export class BookComponent implements OnInit {
 
     reference: any;
 
-    year: number;
+    searchType: string;
+    searchValue: string;
 
     constructor(private _apiService: ApiService, private _cacheService: CacheService,
                 private dialog: VdlDialog,
@@ -74,9 +82,11 @@ export class BookComponent implements OnInit {
                     this.book = this.getBook( params['bookId'] );
                     break;
                 case PAGE_TYPE.LIST_BOOKS: 
-                    if (params['query']){
-                        this.year = params['query'];
-                        this.books = this.searchByYear(this.year);
+                case PAGE_TYPE.EXPORT_BOOKS: 
+                    if (params['searchType']){
+                        this.searchType = params['searchType'];
+                        this.searchValue = params['searchValue'];
+                        this.books = this.searchBy(this.searchType, this.searchValue);                
                     } 
                     else this.books = this.getBooks();
                     break;          
@@ -87,6 +97,7 @@ export class BookComponent implements OnInit {
     listBooks() { this.router.navigate(['book', PAGE_TYPE.LIST_BOOKS]); }
     newBook() { this.router.navigate(['book', PAGE_TYPE.NEW_BOOK]); }
     editBook(id: number) { this.router.navigate(['book', PAGE_TYPE.EDIT_BOOK, { bookId: id} ] ); }
+    exportBooks() { this.router.navigate(['book', PAGE_TYPE.EXPORT_BOOKS]); }
 
     getCacheLists(){
         this.subjects = this._cacheService.getSubjects();
@@ -96,12 +107,12 @@ export class BookComponent implements OnInit {
         this.attrSize = this._cacheService.getAttribute(ATTR.SIZE);
     }
 
-    searchBooks() { 
-        this.router.navigate(['book', PAGE_TYPE.LIST_BOOKS, { query: this.year} ] ); 
+    searchBooks(searchType: string) { 
+        this.router.navigate(['book', PAGE_TYPE.LIST_BOOKS, { searchType: searchType, searchValue: this.searchValue} ] ); 
     }
 
-    searchByYear(year: number){
-        this._apiService.searchBooksByYear(year).subscribe(
+    searchBy(type: string, value: string){
+        this._apiService.searchBooksBy(type, value).subscribe(
             success => {
                 this.books = success;
             },
@@ -221,6 +232,29 @@ export class BookComponent implements OnInit {
     launchImageUrl(url: string){
         window.open(this.BASE_URL + url, '_blank');
     }
+
+    print(): void {
+      let printContents, popupWin;
+      printContents = document.getElementById('print-section').innerHTML;
+      popupWin = window.open('', '_blank');
+      popupWin.document.open();
+      popupWin.document.write(`
+        <html>
+          <head>
+            <title>Print tab</title>
+            <style>
+            //........Customized style.......
+            </style>
+          </head>
+          <!-- <body onload="window.print();window.close()"> -->
+          <body>
+             ${printContents}
+          </body>
+        </html>`
+      );
+      popupWin.document.close();
+  }  
+
     ngOnInit() {
 
     }

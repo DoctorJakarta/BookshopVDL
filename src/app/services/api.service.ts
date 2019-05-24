@@ -53,7 +53,10 @@ export class ApiService {
     return this.http.delete<Array<string>>(_service + 'book/' + id, {headers: _myHeaders} );
   }
 
-  
+   searchBooksBy(type: string, value: string) {
+    return this.http.get<Array<string>>(_service + 'book/' + type + '/' + value, {headers: _myHeaders} );
+  }  
+
   searchBooksByYear(year: number) {
     return this.http.get<Array<string>>(_service + 'book/year/' + year, {headers: _myHeaders} );
   }  
