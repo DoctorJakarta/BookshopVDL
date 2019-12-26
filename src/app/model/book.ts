@@ -6,6 +6,7 @@ import { Reference } from './reference';
 export enum SALE_STATUS {
   // The values enum NAME is passed into the JSON request, and the java enum name is returned as a string.  T
   PREP = "PREP",
+  REPAIR = "REPAIR",
   LIST = "LIST",
   SALE = "SALE",
   HOLD = "HOLD",
@@ -16,6 +17,7 @@ export enum SALE_STATUS {
 const SaleStatusNames = new Map<string, string>([
   // These are the display Names
   [SALE_STATUS.PREP, 'Catalog in Progress'],
+  [SALE_STATUS.REPAIR, 'In Repair'],
   [SALE_STATUS.LIST, 'In Store'],
   [SALE_STATUS.SALE, 'On Sale'],
   [SALE_STATUS.HOLD, 'Being Held'],

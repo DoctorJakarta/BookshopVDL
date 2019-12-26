@@ -110,7 +110,9 @@ export class BookComponent implements OnInit {
     searchBooks(searchType: string) { 
         this.router.navigate(['book', PAGE_TYPE.LIST_BOOKS, { searchType: searchType, searchValue: this.searchValue} ] ); 
     }
-
+    returnToSearch() { 
+        this.router.navigate(['book', PAGE_TYPE.LIST_BOOKS, { searchType: this.searchType, searchValue: this.searchValue} ] ); 
+    }
     searchBy(type: string, value: string){
         this._apiService.searchBooksBy(type, value).subscribe(
             success => {
@@ -154,7 +156,8 @@ export class BookComponent implements OnInit {
  
         apiServieRequest.subscribe(
             success => {
-                this.listBooks();
+                //this.listBooks();
+                this.returnToSearch();
             },
             error => this._apiService.handleError(error)
         );
@@ -200,8 +203,9 @@ export class BookComponent implements OnInit {
                 if ( newReference.id ) service = this._apiService.updateReference(newReference);
                 service.subscribe(
                     success => {
-                        this.listBooks();
-                    },
+                        //this.listBooks();
+                        this.returnToSearch();
+                  },
                     error =>  this._apiService.handleError(error)
                 );
                 this.dialogRef = null;

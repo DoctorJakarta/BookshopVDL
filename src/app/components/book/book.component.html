@@ -204,7 +204,7 @@
             <th>Bought</th>
             <th>Min</th>
             <th>Max</th>
-            <th>Sold</th>
+            <th>Status</th>
             <th></th>
        </tr>
 		<tr [ngClass]="{'data-table-row-odd':o}" *ngFor='let b of books; let o=odd;'>
@@ -233,7 +233,7 @@
 			<td>{{b.priceBought}}</td>
 			<td>{{b.priceMin}}</td>
 			<td>{{b.priceMax}}</td>
-			<td>{{b.dateSold}}</td>
+			<td>{{b.status}}</td>
             <td align=center>
                 <button vdl-icon-button (click)="deleteBook(b.id)">
                     <vdl-icon fontSet="fontawesome" fontIcon="fa-trash"></vdl-icon>
