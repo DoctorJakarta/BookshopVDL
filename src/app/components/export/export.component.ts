@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
-import { Book, SALE_STATUS } from '../../model/book';
+import { Book, BOOK_STATUS } from '../../model/book';
 
 @Component({
   selector: 'app-export',
@@ -13,7 +13,7 @@ export class ExportComponent implements OnInit {
     books: any;
 
     constructor(private _apiService: ApiService) {
-        this.searchBooksByString(SALE_STATUS.LIST);
+        this.searchBooksByString(BOOK_STATUS.LIST);
     }
 
     searchBooksByString(status: string){

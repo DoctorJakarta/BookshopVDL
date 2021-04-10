@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { CacheService } from '../../services/cache.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Book, SALE_STATUS } from '../../model/book';
+import { Book, BOOK_STATUS } from '../../model/book';
 import { Attribute, ATTR } from '../../model/attribute';
 import { Subject } from '../../model/subject';
 import { Tag } from '../../model/tag';
@@ -40,9 +40,9 @@ export class BookComponent implements OnInit {
     PAGE_TYPE: typeof PAGE_TYPE = PAGE_TYPE;        // This exposed the enum to the HTML
     pageType = PAGE_TYPE.LIST_BOOKS;
 
-    SALE_STATUS: typeof SALE_STATUS = SALE_STATUS;    // This exposes the enum to the HTML
-    saleStatusNames = Book.getSaleStatusNames();
-    selectedSaleStatus = SALE_STATUS.PREP;  
+    SALE_STATUS: typeof BOOK_STATUS = BOOK_STATUS;    // This exposes the enum to the HTML
+    bookStatusNames = Book.getSaleStatusNames();
+    selectedSaleStatus = BOOK_STATUS.PREP;  
 
     // CONDITION: typeof CONDITION = CONDITION;    // This exposes the enum to the HTML
     // conditionList: string[] = new Array("New", "As New", "Fine", "Near Fine", "Very Good", "Good", "Fair", "Poor");
@@ -225,8 +225,8 @@ export class BookComponent implements OnInit {
         return selectedTags;
     }
 
-    getSaleStatusKeys() {
-        return Array.from(this.saleStatusNames.keys());
+    getBookStatusKeys() {
+        return Array.from(this.bookStatusNames.keys());
     } 
 
     // getConditionKeys() {

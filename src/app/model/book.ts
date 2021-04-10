@@ -3,7 +3,7 @@ import { Tag } from './tag';
 import { Reference } from './reference';
 
 // This is globally accessible with "reviewStatus.EDIT" after this.reviewStatus = ReviewStatus
-export enum SALE_STATUS {
+export enum BOOK_STATUS {
   // The values enum NAME is passed into the JSON request, and the java enum name is returned as a string.  T
   PREP = "PREP",
   REPAIR = "REPAIR",
@@ -16,13 +16,13 @@ export enum SALE_STATUS {
 // This is accessible with "fruitNames.get(fruit.APPLE)" after this.fruitNames = Fruit.getFruitNames()
 const SaleStatusNames = new Map<string, string>([
   // These are the display Names
-  [SALE_STATUS.PREP, 'Catalog in Progress'],
-  [SALE_STATUS.REPAIR, 'In Repair'],
-  [SALE_STATUS.LIST, 'In Store'],
-  [SALE_STATUS.SALE, 'On Sale'],
-  [SALE_STATUS.HOLD, 'Being Held'],
-  [SALE_STATUS.KEEP, 'Not For Sale'],
-  [SALE_STATUS.SOLD, 'Sold']
+  [BOOK_STATUS.PREP, 'Catalog in Progress'],
+  [BOOK_STATUS.REPAIR, 'In Repair'],
+  [BOOK_STATUS.LIST, 'In Store'],
+  [BOOK_STATUS.SALE, 'On Sale'],
+  [BOOK_STATUS.HOLD, 'Being Held'],
+  [BOOK_STATUS.KEEP, 'Not For Sale'],
+  [BOOK_STATUS.SOLD, 'Sold']
 ]);
 
 
@@ -72,7 +72,7 @@ export class Book {
     public dateSold: string;
 
     public urlRelative: string;
-    public status = SALE_STATUS.PREP;
+    public status = BOOK_STATUS.PREP;
  
     public references: Reference[];
     public tags: Tag[];
