@@ -1,5 +1,11 @@
 import { Component, ViewEncapsulation, OnInit, Inject } from '@angular/core';
-import { VdlDialog, VdlDialogConfig, VdlDialogRef, VdlIconRegistry, VDL_DIALOG_DATA } from 'vdl-angular';
+// import { VdlDialog, VdlDialogConfig, VdlDialogRef, VdlIconRegistry, VDL_DIALOG_DATA } from 'vdl-angular';
+import { VdlDialog } from '@vdlx/vdl-angular/dialog';
+import { VdlDialogConfig } from '@vdlx/vdl-angular/dialog';
+import { VdlDialogRef } from '@vdlx/vdl-angular/dialog';
+import { VDL_DIALOG_DATA } from '@vdlx/vdl-angular/dialog';
+import { VdlIconRegistry } from '@vdlx/vdl-angular/icon';
+
 import { Reference } from '../../model/reference';
 
 @Component({

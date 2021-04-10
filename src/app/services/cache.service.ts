@@ -24,6 +24,8 @@ export class CacheService {
     }
 
     getAttribute(name: string) { 
+        console.log("Looknin fo attrbute ("+name+") in: " + this.attributes);
+       
        for ( const attribute of this.attributes ) {
          console.log("Checking ("+( name === attribute.name )+") attrbute list for: " + attribute.name);
           if ( name === attribute.name ) {

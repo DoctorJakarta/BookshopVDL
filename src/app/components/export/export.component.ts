@@ -12,16 +12,16 @@ export class ExportComponent implements OnInit {
 
     books: any;
 
-    constructor(private _apiService: ApiService) {
-        this.searchBooksByString(BOOK_STATUS.LIST);
+    constructor(private apiService: ApiService) {
+        this.searchBooksByStatus(BOOK_STATUS.LIST);
     }
 
-    searchBooksByString(status: string){
-        this._apiService.searchBooksByStatus(status).subscribe(
+    searchBooksByStatus(status: string) {
+        this.apiService.searchBooksBy('status', status).subscribe(
             success => {
                 this.books = success;
             },
-            error => this._apiService.handleError(error)
+            error => this.apiService.handleError(error)
         );
     }
 

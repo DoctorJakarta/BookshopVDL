@@ -8,8 +8,8 @@ import { VdlModule } from './vdl-module';
 import { ROUTES } from './app.routes';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-//import './styles/global.scss';
-
+// import './styles/global.scss';
+ 
 import { HomeComponent } from './components/home/home.component';
 
 import { ApiService } from './services/api.service';
@@ -20,6 +20,8 @@ import { TagComponent } from './components/tag/tag.component';
 import { SubjectComponent } from './components/subject/subject.component';
 import { DetailComponent } from './components/detail/detail.component';
 import { ExportComponent } from './components/export/export.component';
+import { LoginComponent } from './components/login/login.component';
+import { BookStatusFilterPipe } from './pipes/book-status-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { ExportComponent } from './components/export/export.component';
     TagComponent,
     SubjectComponent,
     DetailComponent,
-    ExportComponent
+    ExportComponent,
+    LoginComponent,
+    BookStatusFilterPipe
   ],
   imports: [
     HttpClientModule,

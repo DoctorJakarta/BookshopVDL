@@ -26,6 +26,10 @@
 
 <vdl-panel *ngIf="book && (pageType==PAGE_TYPE.NEW_BOOK || pageType==PAGE_TYPE.EDIT_BOOK)">
 <vdl-title-bar title="Book Details"></vdl-title-bar>
+    <button vdl-primary-button (click)="upsertBook()">{{book.id ? 'Update' : 'Create'}}</button>
+    <button vdl-secondary-button (click)="deleteBook()">Delete</button>
+    <button vdl-secondary-button (click)="listBooks()">Cancel</button>
+    Tags: <strong *ngFor="let tag of book.tags "> {{tag.name}} - </strong>
 
     <div class="bookForm">
         <div>
@@ -44,10 +48,18 @@
                     <vdl-option *ngFor="let detail of attrCondition.details" [value]="detail.value">{{detail.value}}</vdl-option>
                 </vdl-select>
             </vdl-form-field>
-            <vdl-form-field label="Pages" class="smallField">
-                <input vdlInput type="text" [(ngModel)]="book.pages"/>
-            </vdl-form-field>
 
+            <vdl-form-field label="Rarity" class="tinyField">
+                <vdl-select [(ngModel)]="book.rarity" >
+                    <vdl-option></vdl-option>
+                    <vdl-option *ngFor="let detail of attrRarity.details" [value]="detail.value">{{detail.value}}</vdl-option>
+               </vdl-select>
+            </vdl-form-field>
+            <vdl-form-field label="Reprints" class="tinyField">
+                <vdl-select [(ngModel)]="book.reprints" >
+                    <vdl-option *ngFor="let detail of attrReprints.details" [value]="detail.value">{{detail.value}}</vdl-option>
+                </vdl-select>
+            </vdl-form-field>
 
             
 
@@ -71,6 +83,7 @@
             </vdl-form-field>
 
 
+
         </div>
     <div>
             <vdl-form-field label="Size" class="tinyField">
@@ -84,6 +97,9 @@
                     <vdl-option *ngFor="let detail of attrBinding.details" [value]="detail.value">{{detail.value}}</vdl-option>
                 </vdl-select>
             </vdl-form-field>
+             <vdl-form-field label="Pages" class="smallField">
+                <input vdlInput size=15 type="text" [(ngModel)]="book.pages"/>
+            </vdl-form-field>           
          <table border=1>
             <tr>
                 <th>Price</th>
@@ -106,7 +122,7 @@
         </vdl-form-field>
         <vdl-form-field label="Sale Status" class="tinyField">
             <vdl-select [(ngModel)]="book.status" >
-                <vdl-option *ngFor="let s of getSaleStatusKeys()" [value]="s">{{saleStatusNames.get(s)}}</vdl-option>
+                <vdl-option *ngFor="let s of getBookStatusKeys()" [value]="s">{{bookStatusNames.get(s)}}</vdl-option>
             </vdl-select>
         </vdl-form-field>
 
@@ -114,11 +130,11 @@
     </div>
 
     <vdl-form-field VdlTextareaAutosize label="Details (Condition, plates, etc.)">
-        <textarea vdlInput type="text" [(ngModel)]="book.details"></textarea>
+        <textarea vdlInput type="text" [(ngModel)]="book.details" rows=5 ></textarea>
     </vdl-form-field>
 
     <vdl-form-field VdlTextareaAutosize label="Contents">
-        <textarea vdlInput type="text" [(ngModel)]="book.contents"></textarea>
+        <textarea vdlInput type="text" [(ngModel)]="book.contents" rows=5 ></textarea>
     </vdl-form-field>
 
     <vdl-form-field VdlTextareaAutosize label="Private Notes">
@@ -126,6 +142,9 @@
     </vdl-form-field>
 
     <vdl-form-field label="Relative URL">
+        <button *ngIf="book.urlRelative" vdl-icon-button (click)=launchImageUrl(book.urlRelative)>
+            <vdl-icon fontSet="fontawesome" fontIcon="fa-external-link"></vdl-icon>
+        </button>       
         <input vdlInput type="text" [(ngModel)]="book.urlRelative" placeholder="1800/1815_Forbes_OrientalMemoires/"/>
     </vdl-form-field>
 
@@ -172,11 +191,16 @@
 
 <vdl-panel *ngIf="pageType==PAGE_TYPE.LIST_BOOKS">
 <vdl-title-bar title="Book List"></vdl-title-bar>
-    <fieldset style='width: 100%'>
+   <fieldset style='width: 100%'>
         <legend>Seach books:</legend>
             <input type="text" [(ngModel)]="searchValue"/>
             <button (click)="searchBooks(SEARCH_TYPE.YEAR)">By Year</button>
             <button (click)="searchBooks(SEARCH_TYPE.AUTHOR)">By Author</button>
+            <select [(ngModel)]="searchValue">
+                <option></option>
+                <option *ngFor="let tag of tags" [value]="tag.name">{{tag.name}}</option>          
+            </select>
+            <button (click)="searchBooks(SEARCH_TYPE.TAG)">By Tag</button>
     </fieldset> 
 
 
@@ -200,14 +224,23 @@
             <th>Year</th>
             <th>Author</th>
             <th>Title</th>
+            <th>Tags</th>
+            <th>Vol.</th>
+            <th>Rare</th>
+            <th>Reprint</th>
             <th>Sell</th>
             <th>Bought</th>
             <th>Min</th>
             <th>Max</th>
-            <th>Status</th>
-            <th></th>
+            <th>Status<br/>
+                <vdl-select (selectionChange)="filterBookStatus()" [(ngModel)]="selectedBookStatus">
+                    <vdl-option value="0">All</vdl-option>
+                    <vdl-option *ngFor="let s of getBookStatusKeys()" [value]="s">{{bookStatusNames.get(s)}}</vdl-option>
+                </vdl-select>
+
+            </th>
        </tr>
-		<tr [ngClass]="{'data-table-row-odd':o}" *ngFor='let b of books; let o=odd;'>
+		<tr [ngClass]="{'data-table-row-odd':o}" *ngFor='let b of books | bookStatusFilter: selectedBookStatus; let o=odd;'>
             <td align=center>
                 <button vdl-icon-button (click)="editBook(b.id)">
                     <vdl-icon fontSet="fontawesome" fontIcon="fa-cog"></vdl-icon>
@@ -229,16 +262,22 @@
                     <vdl-icon fontSet="fontawesome" fontIcon="fa-copyright"></vdl-icon>
                 </button>
            </td>
+			<td><div *ngFor="let tag of b.tags">{{tag.name}}</div></td>
+			<td>{{b.volume}}</td>
+			<td>{{b.rarity}}</td>
+			<td>{{b.reprint}}</td>
 			<td>{{b.price}}</td>
 			<td>{{b.priceBought}}</td>
 			<td>{{b.priceMin}}</td>
 			<td>{{b.priceMax}}</td>
 			<td>{{b.status}}</td>
+<!--        SDon't show DELETE trash can on list.  Must go to details page to delete.
             <td align=center>
                 <button vdl-icon-button (click)="deleteBook(b.id)">
                     <vdl-icon fontSet="fontawesome" fontIcon="fa-trash"></vdl-icon>
                 </button>
-            </td>      
+            </td>
+-->      
 
         </tr>
 	</table>

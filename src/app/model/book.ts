@@ -5,16 +5,16 @@ import { Reference } from './reference';
 // This is globally accessible with "reviewStatus.EDIT" after this.reviewStatus = ReviewStatus
 export enum BOOK_STATUS {
   // The values enum NAME is passed into the JSON request, and the java enum name is returned as a string.  T
-  PREP = "PREP",
-  REPAIR = "REPAIR",
-  LIST = "LIST",
-  SALE = "SALE",
-  HOLD = "HOLD",
-  KEEP = "KEEP",
-  SOLD = "SOLD"
+  PREP = 'PREP',
+  REPAIR = 'REPAIR',
+  LIST = 'LIST',
+  SALE = 'SALE',
+  HOLD = 'HOLD',
+  KEEP = 'KEEP',
+  SOLD = 'SOLD'
 }
 // This is accessible with "fruitNames.get(fruit.APPLE)" after this.fruitNames = Fruit.getFruitNames()
-const SaleStatusNames = new Map<string, string>([
+const BookStatusNames = new Map<string, string>([
   // These are the display Names
   [BOOK_STATUS.PREP, 'Catalog in Progress'],
   [BOOK_STATUS.REPAIR, 'In Repair'],
@@ -47,7 +47,7 @@ export class Book {
     public subjectId: number;
     public title: string;
     public author: string;
- 
+
     public publisher: string;
     public publisherPlace: string;
     public year: number;
@@ -73,12 +73,12 @@ export class Book {
 
     public urlRelative: string;
     public status = BOOK_STATUS.PREP;
- 
+
     public references: Reference[];
     public tags: Tag[];
 
-    public subject = new Subject(16,'Science', 'General');
+    public subject = new Subject(16, 'Science', 'General');
 
-    public static getSaleStatusNames() { return SaleStatusNames; }
+    public static getStatusNames() { return BookStatusNames; }
     // public static getConditionNames() { return SaleStatusNames; }
 }

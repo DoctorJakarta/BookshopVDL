@@ -23,7 +23,7 @@
 		<tr [ngClass]="{'data-table-row-odd':o}" *ngFor='let a of attributes; let o=odd;'>
             <td align=center>
                 <button vdl-icon-button (click)="editAttribute(a.id)">
-                    <vdl-icon fontSet="fontawesome" fontIcon="fa-cog"></vdl-icon>
+                    <vdl-icon fontSet="fontawesome" fontIcon="fa-cog">Edit</vdl-icon>
                 </button>
             </td>
             <td>{{a.name}}</td>

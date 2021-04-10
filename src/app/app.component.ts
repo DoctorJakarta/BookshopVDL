@@ -1,7 +1,9 @@
 import { Component, ElementRef,  NgZone, OnInit, Renderer,  ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
-import { VdlAutocompleteTrigger, VdlIconRegistry, VdlOption, GlobalNotification, GlobalHelp,  Category } from 'vdl-angular';
+// import { VdlAutocompleteTrigger, VdlIconRegistry, VdlOption, GlobalNotification, GlobalHelp,  Category } from 'vdl-angular';
+import { VdlIconRegistry } from '@vdlx/vdl-angular/icon';
+import { Category } from '@vdlx/vdl-angular/sidenav';
 import { NgModel } from '@angular/forms';
 import { ApiService } from './services/api.service';
 import { CacheService } from './services/cache.service';
@@ -24,7 +26,7 @@ export class AppComponent implements OnInit {
     { displayName: 'Books', route: 'book/List', icon: 'fa-columns' },
     { displayName: 'Export', route: 'export', icon: 'fa-download' },
     { displayName: 'Configuration', icon: 'fa-cog', expanded: true,
-        subCategories:[
+        subCategories: [
             { displayName: 'Attributes', route: 'attribute/List', icon: 'fa-list-alt' },
             { displayName: 'Subjects', route: 'subject/List', icon: 'fa-sitemap' },
             { displayName: 'Tags', route: 'tag/List', icon: 'fa-tags' }
@@ -79,55 +81,13 @@ export class AppComponent implements OnInit {
     return categories.reduce(reducer);
   }
 
-    getTags() {
-        this._apiService.readTags().subscribe(
-            success => { this._cacheService.setTags(success); },
-            error => this._apiService.handleError(error)
-        );
-    }
-    getAttributes() {
-        this._apiService.readAttributes().subscribe(
-            success => {
-                this._cacheService.setAttributes(success);            // Cache is refreshed whenever List is called, which happens after New/Update
-            },
-            error => this._apiService.handleError(error)
-        );
-    }
 
-/*     getAttributes() {
-        this._apiService.readAttributes().subscribe(
-            success => {  
-                const attributeNames = success; 
-                for ( const name of attributeNames ) {
-                    console.log("Got attribute Name: " + name);
-                    this.getAttribute(999);
-                }
-            },
-            error => this._apiService.handleError(error)
-        );    
-    } */
-
-    // getAttribute(id: number) {
-    //     this._apiService.readAttribute(id).subscribe(
-    //         success => {  this._cacheService.addAttribute(success); },
-    //         error => this._apiService.handleError(error)
-    //     );    
-    // }
-
-    getSubjects() {
-        this._apiService.readSubjects().subscribe(
-            success => {
-               this._cacheService.setSubjects(success);            // Cache is refreshed whenever List is called, which happens after New/Update
-            },
-            error => this._apiService.handleError(error)
-        );
-    }
 
     public ngOnInit() {
 
-        this.getTags();
-        this.getAttributes();
-        this.getSubjects();
+        // this.getTags();
+        // this.getAttributes();
+        // this.getSubjects();
 
 
         this.selectedCategory = this.categories[0];
