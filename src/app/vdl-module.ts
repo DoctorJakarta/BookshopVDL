@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
 
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { VdlAutocompleteModule } from '@vdlx/vdl-angular/autocomplete';
 import { VdlAvatarModule } from '@vdlx/vdl-angular/avatar';
 import { VdlBadgeModule } from '@vdlx/vdl-angular/badge';
@@ -9,7 +10,10 @@ import { VdlButtonToggleModule } from '@vdlx/vdl-angular/button-toggle';
 import { VdlCardModule } from '@vdlx/vdl-angular/card';
 import { VdlCheckboxModule } from '@vdlx/vdl-angular/checkbox';
 import { VdlChipsModule } from '@vdlx/vdl-angular/chips';
-import { VdlDataTableModule } from '@vdlx/vdl-angular/data-table';
+import {
+  VdlMomentDateModule,
+  VdlNativeDateModule
+} from '@vdlx/vdl-angular/core';
 import { VdlDatepickerModule } from '@vdlx/vdl-angular/datepicker';
 import { VdlDetailsPanelModule } from '@vdlx/vdl-angular/details-panel';
 import { VdlDialogModule } from '@vdlx/vdl-angular/dialog';
@@ -24,7 +28,6 @@ import { VdlInputModule } from '@vdlx/vdl-angular/input';
 import { VdlListModule } from '@vdlx/vdl-angular/list';
 import { VdlLoginModule } from '@vdlx/vdl-angular/login';
 import { VdlMenuModule } from '@vdlx/vdl-angular/menu';
-import { VdlMomentDateModule, VdlNativeDateModule } from '@vdlx/vdl-angular/core';
 import { VdlNotificationModule } from '@vdlx/vdl-angular/notification';
 import { VdlPaginatorModule } from '@vdlx/vdl-angular/paginator';
 import { VdlPanelModule } from '@vdlx/vdl-angular/panel';
@@ -32,26 +35,28 @@ import { VdlPopoverModule } from '@vdlx/vdl-angular/popover';
 import { VdlProgressBarModule } from '@vdlx/vdl-angular/progress-bar';
 import { VdlProgressSpinnerModule } from '@vdlx/vdl-angular/progress-spinner';
 import { VdlRadioModule } from '@vdlx/vdl-angular/radio';
-//import { VdlScrollableContainerModule } from '@vdlx/vdl-angular/scrollbar';
 import { VdlScrollableContainerModule } from '@vdlx/vdl-angular/scrollable-container';
 import { VdlSelectModule } from '@vdlx/vdl-angular/select';
 import { VdlSidenavModule } from '@vdlx/vdl-angular/sidenav';
-import { VdlSliderModule } from '@vdlx/vdl-angular/slider';
 import { VdlSlideToggleModule } from '@vdlx/vdl-angular/slide-toggle';
+import { VdlSliderModule } from '@vdlx/vdl-angular/slider';
 import { VdlSortModule } from '@vdlx/vdl-angular/sort';
-import { VdlStepperModule } from '@vdlx/vdl-angular/stepper';
+import { VdlStepper2Module } from '@vdlx/vdl-angular/stepper2';
+import { VdlTableModule } from '@vdlx/vdl-angular/table';
 import { VdlTabsModule } from '@vdlx/vdl-angular/tabs';
 import { VdlTitleBarModule } from '@vdlx/vdl-angular/title-bar';
 import { VdlToolbarModule } from '@vdlx/vdl-angular/toolbar';
 import { VdlTooltipModule } from '@vdlx/vdl-angular/tooltip';
 import { VdlTopBarModule } from '@vdlx/vdl-angular/top-bar';
-import { VdlWizardModule } from '@vdlx/vdl-angular/wizard';
-import { VdlTableModule } from '@vdlx/vdl-angular/table';
+import { VdlTreeModule } from '@vdlx/vdl-angular/tree';
+import { VdlWizard2Module } from '@vdlx/vdl-angular/wizard2';
+
 /**
- * NgModule that includes all Vdlerial modules that are required to serve the demo-app.
+ * NgModule that includes all VDL modules that are required to serve the demo-app.
  */
 @NgModule({
   exports: [
+    FormsModule,
     VdlAutocompleteModule,
     VdlAvatarModule,
     VdlBadgeModule,
@@ -61,7 +66,6 @@ import { VdlTableModule } from '@vdlx/vdl-angular/table';
     VdlCardModule,
     VdlCheckboxModule,
     VdlChipsModule,
-    VdlDataTableModule,
     VdlDatepickerModule,
     VdlDetailsPanelModule,
     VdlDialogModule,
@@ -84,21 +88,22 @@ import { VdlTableModule } from '@vdlx/vdl-angular/table';
     VdlPopoverModule,
     VdlProgressBarModule,
     VdlProgressSpinnerModule,
- //   VdlRadioModule,
+    VdlRadioModule,
     VdlScrollableContainerModule,
     VdlSelectModule,
     VdlSidenavModule,
     VdlSliderModule,
     VdlSlideToggleModule,
     VdlSortModule,
-    VdlStepperModule,
+    VdlStepper2Module,
     VdlTableModule,
     VdlTabsModule,
     VdlTitleBarModule,
     VdlToolbarModule,
     VdlTooltipModule,
     VdlTopBarModule,
-    VdlWizardModule
+    VdlTreeModule,
+    VdlWizard2Module
   ]
 })
 export class VdlModule {}
