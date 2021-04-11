@@ -1,4 +1,4 @@
-import { Component, ElementRef,  NgZone, OnInit, Renderer,  ViewChild } from '@angular/core';
+import { Component, ElementRef,  NgZone, OnInit, Renderer2,  ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
 // import { VdlAutocompleteTrigger, VdlIconRegistry, VdlOption, GlobalNotification, GlobalHelp,  Category } from 'vdl-angular';
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
   constructor(private _apiService: ApiService, private _cacheService: CacheService,
                 vdlIconRegistry: VdlIconRegistry,
                 private _sanitizer: DomSanitizer,
-                private _renderer: Renderer,
+                private _renderer: Renderer2,
                 private _router: Router,
                 private _ngZone: NgZone,
                 private _elementRef: ElementRef
